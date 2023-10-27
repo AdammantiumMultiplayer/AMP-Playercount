@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace Playercount
 {
-    public class Playercount : AMP_Plugin
+    public class PlayerCount : AMP_Plugin
     {
         public override string NAME => "playercount";
         public override string AUTHOR => "Flexhd";
