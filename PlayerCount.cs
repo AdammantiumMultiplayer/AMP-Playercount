@@ -1,4 +1,4 @@
-﻿using AMP;
+using AMP;
 using AMP.DedicatedServer;
 using AMP.DedicatedServer.Plugins;
 using AMP.Events;
@@ -17,18 +17,26 @@ using UnityEngine;
 
 namespace Playercount
 {
-    public class PlayerCount : AMP_Plugin
+    public class Playercount : AMP_Plugin
     {
         public override string NAME => "playercount";
         public override string AUTHOR => "Flexhd";
-        public override string VERSION => "0.1.0";
+        public override string VERSION => "0.1.2";
 
         private Coroutine updateCoroutine;
+        PlayercountConfig config;
+
+        internal class PlayercountConfig : PluginConfig
+        {
+            public string message = "Player count:s";
+        }
+
 
         public override void OnStart()
         {
             Log.Info(NAME, "player count plugin online have a cookie");
             // Start the player count display loop
+            config = (PlayercountConfig)GetConfig();
             Thread playerCountThread = new Thread(PlayerCountDisplayLoop);
             playerCountThread.Start();
         }
@@ -40,13 +48,14 @@ namespace Playercount
                 Vector3 position = Vector3.forward * 3;
                 Vector3 upperRight = position + Vector3.up + Vector3.right;
                 int playerCount = ModManager.serverInstance.connectedClients;
-                string message = $"Player count: {playerCount}";
+                string messagecount = $"{config.message}{playerCount}";
                 ModManager.serverInstance.netamiteServer.SendToAll(
-                    new DisplayTextPacket("say", message, Color.yellow, upperRight, true, true, 10)
+                    new DisplayTextPacket("say", messagecount, Color.yellow, upperRight, true, true, 10)
                 );
                 Thread.Sleep(10000);
             }
         }
     }
 }
+
 
