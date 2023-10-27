@@ -5,7 +5,8 @@ AMP-Playercount is a plugin designed for AMP servers. It provides a feature to d
 ## Features
 
 - **Player Count Display**: The plugin displays the current number of connected players in the bottom left of the screen. The player count is updated in real-time as players join and leave the server.
-Soon:tm:
+
+- **Soon:tm:**
 - **Customizable Message**: The plugin allows you to customize the message that is displayed. You can change the message to fit the style of your server or to provide additional information to your players.
 
 - **Position Control**: You have control over where the player count is displayed on the screen. By default, it's in the bottom left, but you can adjust the position to fit your needs.
