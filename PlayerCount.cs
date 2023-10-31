@@ -21,14 +21,14 @@ namespace Playercount
     {
         public override string NAME => "playercount";
         public override string AUTHOR => "Flexhd";
-        public override string VERSION => "0.1.2";
+        public override string VERSION => "0.1.3";
 
         private Coroutine updateCoroutine;
         PlayercountConfig config;
 
         internal class PlayercountConfig : PluginConfig
         {
-            public string message = "Player count:s";
+            public string message = "Player count:";
         }
 
 
@@ -50,12 +50,10 @@ namespace Playercount
                 int playerCount = ModManager.serverInstance.connectedClients;
                 string messagecount = $"{config.message}{playerCount}";
                 ModManager.serverInstance.netamiteServer.SendToAll(
-                    new DisplayTextPacket("say", messagecount, Color.yellow, upperRight, true, true, 10)
+                    new DisplayTextPacket("players", messagecount, Color.yellow, upperRight, true, true, 10)
                 );
                 Thread.Sleep(10000);
             }
         }
     }
 }
-
-
