@@ -25,6 +25,7 @@ namespace Playercount
 
         private Coroutine updateCoroutine;
         PlayercountConfig config;
+        private Thread playerCountThread;
 
         internal class PlayercountConfig : PluginConfig
         {
@@ -37,8 +38,14 @@ namespace Playercount
             Log.Info(NAME, "player count plugin online have a cookie");
             // Start the player count display loop
             config = (PlayercountConfig)GetConfig();
-            Thread playerCountThread = new Thread(PlayerCountDisplayLoop);
+            playerCountThread = new Thread(PlayerCountDisplayLoop);
             playerCountThread.Start();
+        }
+
+        public override void OnStop()
+        {
+            config = null;
+            playerCountThread.Interrupt();
         }
 
         private void PlayerCountDisplayLoop()
@@ -52,7 +59,11 @@ namespace Playercount
                 ModManager.serverInstance.netamiteServer.SendToAll(
                     new DisplayTextPacket("players", messagecount, Color.yellow, upperRight, true, true, 10)
                 );
-                Thread.Sleep(10000);
+                try {
+                    Thread.Sleep(10000);
+                } catch {
+                    break;
+                }
             }
         }
     }
